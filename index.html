@@ -44,7 +44,8 @@
       border-radius: 50%;
       object-fit: cover;
       flex-shrink: 0;
-      margin-right: 140px;
+      margin-right: 140px; /* puxada para a esquerda */
+      cursor: pointer;
     }
 
     main {
@@ -111,31 +112,33 @@
 
     .comentarios-container {
       max-width: 700px;
-      margin: 0 auto 80px;
-      display: flex;
-      flex-direction: column;
-      gap: 25px;
-      padding: 0 10px;
+      margin: 40px auto;
+      position: relative;
+      overflow: hidden;
+      border-radius: 8px;
     }
 
     .comentario {
       opacity: 0;
-      transform: translateY(30px) scale(0.95);
-      animation: entradaComentario 1.5s ease forwards;
-      background-color: rgba(255, 255, 255, 0.12);
+      transform: translateX(100%);
+      transition: all 0.6s ease;
+      position: absolute;
+      width: 100%;
+      top: 0;
+      left: 0;
+      background-color: rgba(255,255,255,0.12);
       padding: 20px 25px;
       border-left: 5px solid #25D366;
-      border-radius: 8px;
       color: #fff;
-      text-align: left;
-      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35);
       font-size: 1.3em;
-      position: relative;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.35);
     }
 
-    .comentario:nth-child(1) { animation-delay: 0s; }
-    .comentario:nth-child(2) { animation-delay: 1.2s; }
-    .comentario:nth-child(3) { animation-delay: 2.4s; }
+    .comentario.ativo {
+      opacity: 1;
+      transform: translateX(0);
+      position: relative;
+    }
 
     .cliente-info {
       margin-top: 12px;
@@ -157,12 +160,23 @@
       color: #128C7E;
     }
 
-    @keyframes entradaComentario {
-      to {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-      }
+    .slide-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background-color: rgba(0,0,0,0.5);
+      border: none;
+      color: #fff;
+      font-size: 2em;
+      padding: 5px 10px;
+      cursor: pointer;
+      border-radius: 50%;
+      z-index: 10;
     }
+
+    .slide-btn.prev { left: 10px; }
+    .slide-btn.next { right: 10px; }
+    .slide-btn:hover { background-color: rgba(0,0,0,0.8); }
 
     .whatsapp-btn {
       position: fixed;
@@ -197,16 +211,17 @@
       box-sizing: border-box;
     }
 
-    .whatsapp-btn::after {
-      animation-delay: 1.25s;
-    }
+    .whatsapp-btn::after { animation-delay: 1.25s; }
 
     @keyframes pulse {
       0% { transform: scale(1); opacity: 0.7; }
       100% { transform: scale(1.8); opacity: 0; }
     }
 
-    .whatsapp-btn img { width: 38px; height: 38px; }
+    .whatsapp-btn img {
+      width: 38px;
+      height: 38px;
+    }
 
     .rodape {
       text-align: left;
@@ -223,206 +238,186 @@
       border-radius: 4px;
       box-shadow: 0 0 10px rgba(0,0,0,0.5);
     }
-
-    /* Botão Adm discreto */
-    #abrirAdm { position:fixed; top:10px; right:10px; z-index:10000; background:#000; color:#fff; border:none; padding:5px 10px; cursor:pointer; opacity:0.7; }
   </style>
 </head>
 <body>
 
-<nav>
-  <span>Davi Azulejista</span>
-  <img src="https://raw.githubusercontent.com/9481A24/Reyazulejista/main/IMG-20250717-WA0008.jpg" alt="Foto Davi" class="menu-foto" />
-</nav>
+  <nav>
+    <span>Davi Azulejista</span>
+    <img src="https://raw.githubusercontent.com/9481A24/Reyazulejista/main/IMG-20250717-WA0008.jpg" alt="Foto Davi" class="menu-foto" />
+  </nav>
 
-<main>
-  <div class="frase-impacto">
-    Somos especialistas <br>
-    Fazemos perfeição <br>
-    E preço é mesmo <br>
-    Que pagaria <br>
-    Em outro lugar
-  </div>
-
-  <h1>Nossos Serviços</h1>
-  <ul>
-    <li>Gesseiro iluminação</li>
-    <li>Pedreiro Acabamento</li>
-    <li>Eletricista</li>
-    <li>Todos tipo Pisos</li>
-  </ul>
-
-  <div class="galeria">
-    <img src="https://raw.githubusercontent.com/9481A24/Reyazulejista/main/iluminacao-sanca-corredor.jpg" alt="Cozinha planejada" />
-    <img src="https://raw.githubusercontent.com/9481A24/Reyazulejista/main/images%20(16).jpeg" alt="Armário planejado" />
-    <img src="https://raw.githubusercontent.com/9481A24/Reyazulejista/main/images%20(17).jpeg" alt="Home office sob medida" />
-    <img src="https://raw.githubusercontent.com/9481A24/Reyazulejista/main/WhatsApp_Image_2021-05-25_at_17.33.13_1.jpeg-1030x1030.jpg" alt="Painel e móveis de sala" />
-  </div>
-
-  <div class="comentarios-container">
-    <div class="comentario">
-      <p>“Ficamos encantados com o projeto da cozinha! Cada detalhe pensado para o nosso espaço.”</p>
-      <div class="cliente-info">
-        <span>📞</span>
-        <a href="tel:+5531996126215" class="telefone">(31) 99612-6215</a>
-      </div>
+  <main>
+    <div class="frase-impacto">
+      Somos especialistas <br>
+      Fazemos perfeição <br>
+      E preço é mesmo <br>
+      Que pagaria <br>
+      Em outro lugar
     </div>
-    <div class="comentario">
-      <p>“Qualidade incrível e acabamento impecável. Atendimento excelente do início ao fim.”</p>
-      <div class="cliente-info">
-        <span>📞</span>
-        <a href="tel:+5531996126215" class="telefone">(31) 99612-6215</a>
-      </div>
+
+    <h1>Nossos Serviços</h1>
+    <ul>
+      <li>Gesseiro iluminação</li>
+      <li>Pedreiro Acabamento</li>
+      <li>Eletricista</li>
+      <li>Todos tipo Pisos</li>
+    </ul>
+
+    <div class="galeria">
+      <img src="https://raw.githubusercontent.com/9481A24/Reyazulejista/main/iluminacao-sanca-corredor.jpg" alt="Cozinha planejada" />
+      <img src="https://raw.githubusercontent.com/9481A24/Reyazulejista/main/images%20(16).jpeg" alt="Armário planejado" />
+      <img src="https://raw.githubusercontent.com/9481A24/Reyazulejista/main/images%20(17).jpeg" alt="Home office sob medida" />
+      <img src="https://raw.githubusercontent.com/9481A24/Reyazulejista/main/WhatsApp_Image_2021-05-25_at_17.33.13_1.jpeg-1030x1030.jpg" alt="Painel e móveis de sala" />
     </div>
-    <div class="comentario">
-      <p>“Superaram nossas expectativas! Entrega no prazo e móveis lindos.”</p>
-      <div class="cliente-info">
-        <span>📞</span>
-        <a href="tel:+5531996126215" class="telefone">(31) 99612-6215</a>
+
+    <!-- Carrossel 1 -->
+    <div class="comentarios-container" id="carrossel1">
+      <div class="comentario ativo">
+        <p>“Ficamos encantados com o projeto da cozinha! Cada detalhe pensado para o nosso espaço.”</p>
+        <div class="cliente-info">
+          <span>📞</span>
+          <a href="tel:+5531996126215" class="telefone">(31) 99612-6215</a>
+        </div>
       </div>
+      <div class="comentario">
+        <p>“Qualidade incrível e acabamento impecável. Atendimento excelente do início ao fim.”</p>
+        <div class="cliente-info">
+          <span>📞</span>
+          <a href="tel:+5531996126215" class="telefone">(31) 99612-6215</a>
+        </div>
+      </div>
+      <div class="comentario">
+        <p>“Superaram nossas expectativas! Entrega no prazo e móveis lindos.”</p>
+        <div class="cliente-info">
+          <span>📞</span>
+          <a href="tel:+5531996126215" class="telefone">(31) 99612-6215</a>
+        </div>
+      </div>
+      <button class="slide-btn prev">&#10094;</button>
+      <button class="slide-btn next">&#10095;</button>
     </div>
+
+    <!-- Carrossel 2 -->
+    <div class="comentarios-container" id="carrossel2">
+      <div class="comentario ativo">
+        <p>“Serviço rápido e muito bem feito. Recomendo para todos!”</p>
+        <div class="cliente-info">
+          <span>📞</span>
+          <a href="tel:+5531996126215" class="telefone">(31) 99543-9612</a>
+        </div>
+      </div>
+      <div class="comentario">
+        <p>“Profissionais competentes e simpáticos, deixaram nossa casa perfeita.”</p>
+        <div class="cliente-info">
+          <span>📞</span>
+          <a href="tel:+5531996126215" class="telefone">(31) 99543-9612</a>
+        </div>
+      </div>
+      <div class="comentario">
+        <p>“Muito capricho em cada detalhe, resultado impecável!”</p>
+        <div class="cliente-info">
+          <span>📞</span>
+          <a href="tel:+5531996126215" class="telefone">(31) 99543-9612</a>
+        </div>
+      </div>
+      <button class="slide-btn prev">&#10094;</button>
+      <button class="slide-btn next">&#10095;</button>
+    </div>
+
+  </main>
+
+  <!-- Botão WhatsApp -->
+  <a class="whatsapp-btn" href="https://wa.me/553100000000" target="_blank" aria-label="WhatsApp">
+    <img src="https://cdn-icons-png.flaticon.com/512/733/733585.png" alt="WhatsApp" />
+  </a>
+
+  <!-- Rodapé -->
+  <footer class="rodape">
+    CNPJ: 59.711.008/0001-09 Jeová-Jiré
+  </footer>
+
+  <!-- Formulário administrativo escondido -->
+  <div id="adm-form" style="
+    display:none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(0,0,0,0.95);
+    padding: 30px;
+    border-radius: 10px;
+    z-index: 10000;
+    color: white;
+    max-width: 400px;
+    width: 90%;
+  ">
+    <h2>Formulário Administrativo</h2>
+    <form>
+      <label>Nome:</label><br>
+      <input type="text" style="width:100%; margin-bottom:10px;"><br>
+      <label>Telefone:</label><br>
+      <input type="text" style="width:100%; margin-bottom:10px;"><br>
+      <label>Serviço:</label><br>
+      <input type="text" style="width:100%; margin-bottom:10px;"><br>
+      <label>Valor:</label><br>
+      <input type="number" style="width:100%; margin-bottom:10px;"><br>
+      <button type="submit" style="background:#25D366;color:#fff;padding:8px 15px;border:none;border-radius:5px;cursor:pointer;">Enviar</button>
+      <button type="button" onclick="document.getElementById('adm-form').style.display='none';" style="background:red;color:#fff;padding:8px 15px;border:none;border-radius:5px;cursor:pointer;margin-left:10px;">Fechar</button>
+    </form>
   </div>
-</main>
 
-<!-- Botão WhatsApp -->
-<a class="whatsapp-btn" href="https://wa.me/553100000000" target="_blank" aria-label="WhatsApp">
-  <img src="https://cdn-icons-png.flaticon.com/512/733/733585.png" alt="WhatsApp" />
-</a>
+  <script>
+    // Carrossel
+    function criarCarrossel(containerId) {
+      const container = document.getElementById(containerId);
+      const comentarios = container.querySelectorAll('.comentario');
+      const prevBtn = container.querySelector('.slide-btn.prev');
+      const nextBtn = container.querySelector('.slide-btn.next');
+      let index = 0;
 
-<!-- Rodapé -->
-<footer class="rodape">
-  CNPJ:  59.711.008/0001-09 Deus Fiel
-</footer>
+      function mostrarComentario(novoIndex) {
+        comentarios.forEach((c) => c.classList.remove('ativo'));
+        comentarios[novoIndex].classList.add('ativo');
+        index = novoIndex;
+      }
 
-<!-- Botão Adm -->
-<button id="abrirAdm">Adm</button>
+      prevBtn.addEventListener('click', () => {
+        let novoIndex = index - 1;
+        if(novoIndex < 0) novoIndex = comentarios.length - 1;
+        mostrarComentario(novoIndex);
+      });
 
-<!-- Menu Adm -->
-<div class="admin-menu" id="adminMenu" style="display:none; background:rgba(0,0,0,0.85); padding:15px; border-radius:8px; color:#fff; position:fixed; top:50px; right:10px; width:300px; z-index:10000;">
-  <input type="password" id="adminSenha" placeholder="Digite a senha" style="width:100%; margin-bottom:5px;">
-  <button id="btnAdmin" style="width:100%; margin-bottom:5px;">Entrar</button>
-  <p id="mensagemErro" style="color:#f00;"></p>
+      nextBtn.addEventListener('click', () => {
+        let novoIndex = (index + 1) % comentarios.length;
+        mostrarComentario(novoIndex);
+      });
 
-  <div id="formServico" style="display:none; margin-top:10px;">
-    <h3>Relatar Serviço</h3>
-    <input type="text" id="clienteNome" placeholder="Nome" style="width:100%; margin-bottom:5px;">
-    <input type="text" id="clienteTelefone" placeholder="Telefone" style="width:100%; margin-bottom:5px;">
-    <input type="text" id="clienteEndereco" placeholder="Endereço" style="width:100%; margin-bottom:5px;">
-    <input type="text" id="clienteCidade" placeholder="Cidade" style="width:100%; margin-bottom:5px;">
-    <input type="text" id="clienteBairro" placeholder="Bairro" style="width:100%; margin-bottom:5px;">
-    <input type="text" id="clienteServico" placeholder="Serviço" style="width:100%; margin-bottom:5px;">
-    <input type="number" id="clienteValor" placeholder="Valor" style="width:100%; margin-bottom:5px;">
-    <input type="number" id="clienteNumero" placeholder="Número do cliente (001-120)" min="1" max="120" style="width:100%; margin-bottom:5px;">
-    <button id="btnSalvarServico" style="width:100%; margin-bottom:5px;">Salvar</button>
-    <p id="mensagemServico" style="margin-top:5px;"></p>
-  </div>
+      setInterval(() => {
+        let novoIndex = (index + 1) % comentarios.length;
+        mostrarComentario(novoIndex);
+      }, 5000);
 
-  <div id="painelFinanceiro" style="display:none; margin-top:10px;">
-    <h3>Financeiro Mensal</h3>
-    <p>Total acumulado: R$ <span id="totalAcumulado">0,00</span></p>
-    <button id="btnZerar" style="background:#f00; color:#fff; border:none; padding:5px 10px; cursor:pointer;">Zerar Total</button>
-  </div>
+      mostrarComentario(index);
+    }
 
-  <div id="notaCliente" style="display:none; margin-top:10px; background:rgba(0,0,0,0.7); padding:10px; border-radius:8px;">
-    <h3>Nota do Cliente</h3>
-    <div id="conteudoNota"></div>
-    <button id="btnImprimir" style="margin-top:5px; background:#25D366; color:#fff; border:none; padding:5px 10px; cursor:pointer;">Imprimir Nota</button>
-  </div>
-</div>
+    criarCarrossel('carrossel1');
+    criarCarrossel('carrossel2');
 
-<script>
-const abrirAdm = document.getElementById('abrirAdm');
-const adminMenu = document.getElementById('adminMenu');
-const senhaInput = document.getElementById('adminSenha');
-const btnAdmin = document.getElementById('btnAdmin');
-const mensagemErro = document.getElementById('mensagemErro');
-const senhaCorreta = '1234';
+    // Formulário ADM - 5 cliques na foto do menu
+    const menuFoto = document.querySelector('.menu-foto');
+    let tapCount = 0;
 
-const totalDisplay = document.getElementById('totalAcumulado');
-const painelFinanceiro = document.getElementById('painelFinanceiro');
-const btnZerar = document.getElementById('btnZerar');
+    menuFoto.addEventListener('click', () => {
+      tapCount++;
+      if(tapCount >= 5){
+        const admForm = document.getElementById('adm-form');
+        admForm.style.display = admForm.style.display === 'none' ? 'block' : 'none';
+        tapCount = 0;
+      }
+      setTimeout(() => tapCount = 0, 2000);
+    });
+  </script>
 
-let total = 0;
-
-abrirAdm.addEventListener('click', () => {
-  adminMenu.style.display = adminMenu.style.display === 'none' ? 'block' : 'none';
-});
-
-btnAdmin.addEventListener('click', () => {
-  if (senhaInput.value === senhaCorreta) {
-    alert("Bem-vindo, Admin!");
-    senhaInput.style.display = "none";
-    btnAdmin.style.display = "none";
-    mensagemErro.textContent = "";
-    document.getElementById('formServico').style.display = "block";
-    painelFinanceiro.style.display = "block";
-    document.getElementById('notaCliente').style.display = "block";
-  } else {
-    mensagemErro.textContent = "Senha incorreta!";
-  }
-});
-
-document.getElementById('btnSalvarServico').addEventListener('click', () => {
-  const nome = document.getElementById('clienteNome').value.trim();
-  const telefone = document.getElementById('clienteTelefone').value.trim();
-  const endereco = document.getElementById('clienteEndereco').value.trim();
-  const cidade = document.getElementById('clienteCidade').value.trim();
-  const bairro = document.getElementById('clienteBairro').value.trim();
-  const servico = document.getElementById('clienteServico').value.trim();
-  const valor = parseFloat(document.getElementById('clienteValor').value.replace(',', '.'));
-  const numero = document.getElementById('clienteNumero').value.trim();
-  const msg = document.getElementById('mensagemServico');
-
-  if(nome && telefone && endereco && cidade && bairro && servico && valor && numero){
-    total += valor;
-    totalDisplay.textContent = total.toFixed(2).replace('.', ',');
-
-    msg.style.color = "#0f0";
-    msg.textContent = `Serviço do cliente nº ${numero.padStart(3,'0')} registrado!`;
-
-    const conteudo = `
-      <p><strong>Número do Cliente:</strong> ${numero.padStart(3,'0')}</p>
-      <p><strong>Nome:</strong> ${nome}</p>
-      <p><strong>Telefone:</strong> ${telefone}</p>
-      <p><strong>Endereço:</strong> ${endereco}</p>
-      <p><strong>Cidade:</strong> ${cidade}</p>
-      <p><strong>Bairro:</strong> ${bairro}</p>
-      <p><strong>Serviço:</strong> ${servico}</p>
-      <p><strong>Valor:</strong> R$ ${valor.toFixed(2).replace('.',',')}</p>
-      <p><strong>Total acumulado do mês:</strong> R$ ${total.toFixed(2).replace('.',',')}</p>
-    `;
-    document.getElementById('conteudoNota').innerHTML = conteudo;
-
-    document.getElementById('clienteNome').value = "";
-    document.getElementById('clienteTelefone').value = "";
-    document.getElementById('clienteEndereco').value = "";
-    document.getElementById('clienteCidade').value = "";
-    document.getElementById('clienteBairro').value = "";
-    document.getElementById('clienteServico').value = "";
-    document.getElementById('clienteValor').value = "";
-    document.getElementById('clienteNumero').value = "";
-  } else {
-    msg.style.color = "#f00";
-    msg.textContent = "Preencha todos os campos!";
-  }
-});
-
-document.getElementById('btnImprimir').addEventListener('click', () => {
-  const nota = document.getElementById('conteudoNota').innerHTML;
-  const janela = window.open('', '', 'width=600,height=600');
-  janela.document.write('<html><head><title>Nota do Cliente</title></head><body>');
-  janela.document.write(nota);
-  janela.document.write('</body></html>');
-  janela.document.close();
-  janela.print();
-});
-
-btnZerar.addEventListener('click', () => {
-  if(confirm("Deseja realmente zerar o total acumulado?")){
-    total = 0;
-    totalDisplay.textContent = total.toFixed(2).replace('.', ',');
-  }
-});
-</script>
 </body>
 </html>
