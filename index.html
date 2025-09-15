@@ -1,423 +1,269 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>pisos vinilicos</title>
-  <meta name="description" content="Móveis planejados com design moderno, funcionalidade e acabamento impecável. Cozinhas, quartos, escritórios sob medida.">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Site com Formulário Administrativo</title>
   <style>
     body {
+      font-family: Arial, sans-serif;
       margin: 0;
       padding: 0;
-      background-image: url('https://raw.githubusercontent.com/9481A24/Reyazulejista/main/Cristallo%20Quartz%20-%20Cam%201_1726426959.jpg');
-      background-size: cover;
-      background-repeat: no-repeat;
-      background-attachment: fixed;
-      color: white;
-      font-family: Arial, sans-serif;
-      text-shadow: 2px 2px 5px #000;
     }
 
-    nav {
+    /* --- FORMULÁRIO ADMIN OCULTO --- */
+    #adm-form {
+      display: none;
       position: fixed;
       top: 0;
       left: 0;
       width: 100%;
-      background: rgba(0, 0, 0, 0.6);
-      padding: 15px 10px 15px 20px;
-      font-size: 1.5em;
-      font-weight: bold;
-      z-index: 1000;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      box-sizing: border-box;
-    }
-
-    nav span {
-      color: white;
-    }
-
-    .menu-foto {
-      width: 50px;
-      height: 50px;
-      border-radius: 50%;
-      object-fit: cover;
-      flex-shrink: 0;
-      margin-right: 140px; /* puxada para a esquerda */
-      cursor: pointer;
-    }
-
-    main {
-      padding-top: 80px;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
-    }
-
-    .frase-impacto {
-      font-size: 1.7em;
-      font-weight: bold;
-      margin-bottom: 40px;
-      max-width: 700px;
-    }
-
-    h1 {
-      font-size: 2.8em;
-      margin-bottom: 20px;
-    }
-
-    ul {
-      list-style: none;
-      padding: 0;
-      font-size: 1.6em;
-      line-height: 2.2em;
-      margin-bottom: 40px;
-    }
-
-    ul li::before {
-      content: "✔️ ";
-    }
-
-    ul li {
-      text-align: left;
-      max-width: 700px;
-      margin: 0 auto 10px;
-    }
-
-    .galeria {
-      width: 100%;
-      max-width: 700px;
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
+      height: 100%;
+      background: rgba(0,0,0,0.8);
+      color: #fff;
       padding: 20px;
-      background-color: rgba(0, 0, 0, 0.5);
-      border-radius: 10px;
-      margin: 0 auto 40px;
-    }
-
-    .galeria img {
-      width: 100%;
-      border-radius: 8px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.7);
-      transition: transform 0.3s ease;
-    }
-
-    .galeria img:hover {
-      transform: scale(1.02);
-    }
-
-    .comentarios-container {
-      max-width: 700px;
-      margin: 40px auto;
-      position: relative;
-      overflow: hidden;
-      border-radius: 8px;
-    }
-
-    .comentario {
-      opacity: 0;
-      transform: translateX(100%);
-      transition: all 0.6s ease;
-      position: absolute;
-      width: 100%;
-      top: 0;
-      left: 0;
-      background-color: rgba(255,255,255,0.12);
-      padding: 20px 25px;
-      border-left: 5px solid #25D366;
-      color: #fff;
-      font-size: 1.3em;
-      box-shadow: 0 6px 18px rgba(0,0,0,0.35);
-    }
-
-    .comentario.ativo {
-      opacity: 1;
-      transform: translateX(0);
-      position: relative;
-    }
-
-    .cliente-info {
-      margin-top: 12px;
-      font-weight: bold;
-      font-size: 1.2em;
-      color: #25D366;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-
-    .telefone {
-      color: #25D366;
-      text-decoration: none;
-      transition: color 0.3s ease;
-    }
-
-    .telefone:hover {
-      color: #128C7E;
-    }
-
-    .slide-btn {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      background-color: rgba(0,0,0,0.5);
-      border: none;
-      color: #fff;
-      font-size: 2em;
-      padding: 5px 10px;
-      cursor: pointer;
-      border-radius: 50%;
-      z-index: 10;
-    }
-
-    .slide-btn.prev { left: 10px; }
-    .slide-btn.next { right: 10px; }
-    .slide-btn:hover { background-color: rgba(0,0,0,0.8); }
-
-    .whatsapp-btn {
-      position: fixed;
-      bottom: 30px;
-      right: 20px;
-      width: 60px;
-      height: 60px;
-      background-color: #25D366;
-      border-radius: 50%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+      box-sizing: border-box;
+      overflow-y: auto;
       z-index: 9999;
-      cursor: pointer;
-      overflow: visible;
     }
 
-    .whatsapp-btn::before,
-    .whatsapp-btn::after {
-      content: "";
-      position: absolute;
-      border: 2px solid #25D366;
-      border-radius: 50%;
-      width: 60px;
-      height: 60px;
-      top: 0;
-      left: 0;
-      animation: pulse 2.5s infinite ease-out;
-      opacity: 0.7;
-      pointer-events: none;
+    #adm-form h2 {
+      text-align: center;
+      margin-bottom: 15px;
+    }
+
+    .adm-field {
+      margin: 10px 0;
+    }
+
+    .adm-field label {
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    .adm-field input {
+      width: 100%;
+      padding: 8px;
       box-sizing: border-box;
     }
 
-    .whatsapp-btn::after { animation-delay: 1.25s; }
-
-    @keyframes pulse {
-      0% { transform: scale(1); opacity: 0.7; }
-      100% { transform: scale(1.8); opacity: 0; }
+    .buttons {
+      margin-top: 15px;
+      display: flex;
+      gap: 10px;
     }
 
-    .whatsapp-btn img {
-      width: 38px;
-      height: 38px;
+    button {
+      padding: 10px 15px;
+      border: none;
+      cursor: pointer;
+      border-radius: 5px;
     }
 
-    .rodape {
+    button:hover {
+      opacity: 0.9;
+    }
+
+    .save-btn { background: #28a745; color: #fff; }
+    .reset-btn { background: #dc3545; color: #fff; }
+    .print-btn { background: #007bff; color: #fff; }
+
+    /* Relógio */
+    #relogio {
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
+      background: #2ecc71;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      font-weight: bold;
+      margin: 20px auto;
+    }
+
+    /* Histórico */
+    #historico {
+      margin-top: 20px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+    }
+
+    table, th, td {
+      border: 1px solid #ccc;
+      color: #fff;
+    }
+
+    th, td {
+      padding: 8px;
       text-align: left;
-      padding: 15px 40px;
-      background: rgba(0, 0, 0, 0.6);
-      font-size: 1em;
-      color: #ccc;
-      margin-top: 60px;
-      position: relative;
-      z-index: 10000;
-      max-width: 700px;
-      margin-left: auto;
-      margin-right: auto;
-      border-radius: 4px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.5);
+    }
+
+    th {
+      background: #444;
+    }
+
+    /* Comprovante */
+    #comprovante {
+      display: none;
     }
   </style>
 </head>
 <body>
+  <!-- FOTO DO TEMPLATE -->
+  <section id="hero">
+    <img src="sua-foto.jpg" alt="Template" class="menu-foto" style="width:100%; max-height:300px; object-fit:cover;">
+  </section>
 
-  <nav>
-    <span>Davi Azulejista</span>
-    <img src="https://raw.githubusercontent.com/9481A24/Reyazulejista/main/IMG-20250717-WA0008.jpg" alt="Foto Davi" class="menu-foto" />
-  </nav>
-
-  <main>
-    <div class="frase-impacto">
-      Somos especialistas <br>
-      Fazemos perfeição <br>
-      E preço é mesmo <br>
-      Que pagaria <br>
-      Em outro lugar
-    </div>
-
-    <h1>Nossos Serviços</h1>
-    <ul>
-      <li>Gesseiro iluminação</li>
-      <li>Pedreiro Acabamento</li>
-      <li>Eletricista</li>
-      <li>Todos tipo Pisos</li>
-    </ul>
-
-    <div class="galeria">
-      <img src="https://raw.githubusercontent.com/9481A24/Reyazulejista/main/iluminacao-sanca-corredor.jpg" alt="Cozinha planejada" />
-      <img src="https://raw.githubusercontent.com/9481A24/Reyazulejista/main/images%20(16).jpeg" alt="Armário planejado" />
-      <img src="https://raw.githubusercontent.com/9481A24/Reyazulejista/main/images%20(17).jpeg" alt="Home office sob medida" />
-      <img src="https://raw.githubusercontent.com/9481A24/Reyazulejista/main/WhatsApp_Image_2021-05-25_at_17.33.13_1.jpeg-1030x1030.jpg" alt="Painel e móveis de sala" />
-    </div>
-
-    <!-- Carrossel 1 -->
-    <div class="comentarios-container" id="carrossel1">
-      <div class="comentario ativo">
-        <p>“Ficamos encantados com o projeto da cozinha! Cada detalhe pensado para o nosso espaço.”</p>
-        <div class="cliente-info">
-          <span>📞</span>
-          <a href="tel:+5531996126215" class="telefone">(31) 99612-6215</a>
-        </div>
-      </div>
-      <div class="comentario">
-        <p>“Qualidade incrível e acabamento impecável. Atendimento excelente do início ao fim.”</p>
-        <div class="cliente-info">
-          <span>📞</span>
-          <a href="tel:+5531996126215" class="telefone">(31) 99612-6215</a>
-        </div>
-      </div>
-      <div class="comentario">
-        <p>“Superaram nossas expectativas! Entrega no prazo e móveis lindos.”</p>
-        <div class="cliente-info">
-          <span>📞</span>
-          <a href="tel:+5531996126215" class="telefone">(31) 99612-6215</a>
-        </div>
-      </div>
-      <button class="slide-btn prev">&#10094;</button>
-      <button class="slide-btn next">&#10095;</button>
-    </div>
-
-    <!-- Carrossel 2 -->
-    <div class="comentarios-container" id="carrossel2">
-      <div class="comentario ativo">
-        <p>“Serviço rápido e muito bem feito. Recomendo para todos!”</p>
-        <div class="cliente-info">
-          <span>📞</span>
-          <a href="tel:+5531996126215" class="telefone">(31) 99543-9612</a>
-        </div>
-      </div>
-      <div class="comentario">
-        <p>“Profissionais competentes e simpáticos, deixaram nossa casa perfeita.”</p>
-        <div class="cliente-info">
-          <span>📞</span>
-          <a href="tel:+5531996126215" class="telefone">(31) 99543-9612</a>
-        </div>
-      </div>
-      <div class="comentario">
-        <p>“Muito capricho em cada detalhe, resultado impecável!”</p>
-        <div class="cliente-info">
-          <span>📞</span>
-          <a href="tel:+5531996126215" class="telefone">(31) 99543-9612</a>
-        </div>
-      </div>
-      <button class="slide-btn prev">&#10094;</button>
-      <button class="slide-btn next">&#10095;</button>
-    </div>
-
-  </main>
-
-  <!-- Botão WhatsApp -->
-  <a class="whatsapp-btn" href="https://wa.me/553100000000" target="_blank" aria-label="WhatsApp">
-    <img src="https://cdn-icons-png.flaticon.com/512/733/733585.png" alt="WhatsApp" />
-  </a>
-
-  <!-- Rodapé -->
-  <footer class="rodape">
-    CNPJ: 59.711.008/0001-09 Jeová-Jiré
-  </footer>
-
-  <!-- Formulário administrativo escondido -->
-  <div id="adm-form" style="
-    display:none;
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background: rgba(0,0,0,0.95);
-    padding: 30px;
-    border-radius: 10px;
-    z-index: 10000;
-    color: white;
-    max-width: 400px;
-    width: 90%;
-  ">
+  <!-- FORMULÁRIO ADMINISTRATIVO -->
+  <div id="adm-form">
     <h2>Formulário Administrativo</h2>
-    <form>
-      <label>Nome:</label><br>
-      <input type="text" style="width:100%; margin-bottom:10px;"><br>
-      <label>Telefone:</label><br>
-      <input type="text" style="width:100%; margin-bottom:10px;"><br>
-      <label>Serviço:</label><br>
-      <input type="text" style="width:100%; margin-bottom:10px;"><br>
-      <label>Valor:</label><br>
-      <input type="number" style="width:100%; margin-bottom:10px;"><br>
-      <button type="submit" style="background:#25D366;color:#fff;padding:8px 15px;border:none;border-radius:5px;cursor:pointer;">Enviar</button>
-      <button type="button" onclick="document.getElementById('adm-form').style.display='none';" style="background:red;color:#fff;padding:8px 15px;border:none;border-radius:5px;cursor:pointer;margin-left:10px;">Fechar</button>
-    </form>
+
+    <div class="adm-field">
+      <label>Nome</label>
+      <input type="text" id="nome">
+    </div>
+    <div class="adm-field">
+      <label>Endereço</label>
+      <input type="text" id="endereco">
+    </div>
+    <div class="adm-field">
+      <label>Bairro</label>
+      <input type="text" id="bairro">
+    </div>
+    <div class="adm-field">
+      <label>Cidade</label>
+      <input type="text" id="cidade">
+    </div>
+    <div class="adm-field">
+      <label>Serviço</label>
+      <input type="text" id="servico">
+    </div>
+    <div class="adm-field">
+      <label>Valor</label>
+      <input type="number" id="valor" step="0.01">
+    </div>
+
+    <!-- Relógio -->
+    <div id="relogio">0.00</div>
+
+    <!-- Botões -->
+    <div class="buttons">
+      <button class="save-btn" onclick="salvarEntrada()">Salvar Entrada</button>
+      <button class="reset-btn" onclick="zerarEntradas()">Zerar</button>
+      <button class="print-btn" onclick="imprimirComprovante()">Imprimir</button>
+    </div>
+
+    <!-- Histórico -->
+    <div id="historico">
+      <h3>Histórico de Entradas</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Data/Hora</th>
+            <th>Nome</th>
+            <th>Serviço</th>
+            <th>Valor</th>
+          </tr>
+        </thead>
+        <tbody id="lista-historico"></tbody>
+      </table>
+    </div>
   </div>
 
+  <!-- COMPROVANTE (para impressão) -->
+  <div id="comprovante"></div>
+
   <script>
-    // Carrossel
-    function criarCarrossel(containerId) {
-      const container = document.getElementById(containerId);
-      const comentarios = container.querySelectorAll('.comentario');
-      const prevBtn = container.querySelector('.slide-btn.prev');
-      const nextBtn = container.querySelector('.slide-btn.next');
-      let index = 0;
+    let total = 0;
+    let historico = [];
+    let clickCount = 0;
+    let clickTimer;
 
-      function mostrarComentario(novoIndex) {
-        comentarios.forEach((c) => c.classList.remove('ativo'));
-        comentarios[novoIndex].classList.add('ativo');
-        index = novoIndex;
+    // Clique na foto 5x para abrir formulário
+    document.querySelector('.menu-foto').addEventListener('click', () => {
+      clickCount++;
+      clearTimeout(clickTimer);
+      clickTimer = setTimeout(() => { clickCount = 0; }, 800);
+      if (clickCount === 5) {
+        document.getElementById('adm-form').style.display = 'block';
+        clickCount = 0;
       }
+    });
 
-      prevBtn.addEventListener('click', () => {
-        let novoIndex = index - 1;
-        if(novoIndex < 0) novoIndex = comentarios.length - 1;
-        mostrarComentario(novoIndex);
-      });
+    function salvarEntrada() {
+      const nome = document.getElementById('nome').value;
+      const endereco = document.getElementById('endereco').value;
+      const bairro = document.getElementById('bairro').value;
+      const cidade = document.getElementById('cidade').value;
+      const servico = document.getElementById('servico').value;
+      const valor = parseFloat(document.getElementById('valor').value) || 0;
+      const dataHora = new Date().toLocaleString();
 
-      nextBtn.addEventListener('click', () => {
-        let novoIndex = (index + 1) % comentarios.length;
-        mostrarComentario(novoIndex);
-      });
+      total += valor;
+      document.getElementById('relogio').innerText = total.toFixed(2);
 
-      setInterval(() => {
-        let novoIndex = (index + 1) % comentarios.length;
-        mostrarComentario(novoIndex);
-      }, 5000);
+      const entrada = { nome, endereco, bairro, cidade, servico, valor, dataHora };
+      historico.push(entrada);
+      atualizarHistorico();
+      gerarComprovante(entrada);
 
-      mostrarComentario(index);
+      // limpa campos
+      document.getElementById('nome').value = "";
+      document.getElementById('endereco').value = "";
+      document.getElementById('bairro').value = "";
+      document.getElementById('cidade').value = "";
+      document.getElementById('servico').value = "";
+      document.getElementById('valor').value = "";
     }
 
-    criarCarrossel('carrossel1');
-    criarCarrossel('carrossel2');
+    function atualizarHistorico() {
+      const tbody = document.getElementById('lista-historico');
+      tbody.innerHTML = "";
+      historico.forEach(ent => {
+        const row = `<tr>
+          <td>${ent.dataHora}</td>
+          <td>${ent.nome}</td>
+          <td>${ent.servico}</td>
+          <td>R$ ${ent.valor.toFixed(2)}</td>
+        </tr>`;
+        tbody.innerHTML += row;
+      });
+    }
 
-    // Formulário ADM - 5 cliques na foto do menu
-    const menuFoto = document.querySelector('.menu-foto');
-    let tapCount = 0;
+    function zerarEntradas() {
+      total = 0;
+      historico = [];
+      document.getElementById('relogio').innerText = "0.00";
+      atualizarHistorico();
+    }
 
-    menuFoto.addEventListener('click', () => {
-      tapCount++;
-      if(tapCount >= 5){
-        const admForm = document.getElementById('adm-form');
-        admForm.style.display = admForm.style.display === 'none' ? 'block' : 'none';
-        tapCount = 0;
-      }
-      setTimeout(() => tapCount = 0, 2000);
-    });
+    function gerarComprovante(ent) {
+      const comp = document.getElementById('comprovante');
+      comp.innerHTML = `
+        <h2>Comprovante de Serviço</h2>
+        <p><b>Data/Hora:</b> ${ent.dataHora}</p>
+        <p><b>Nome:</b> ${ent.nome}</p>
+        <p><b>Endereço:</b> ${ent.endereco}, ${ent.bairro}, ${ent.cidade}</p>
+        <p><b>Serviço:</b> ${ent.servico}</p>
+        <p><b>Valor:</b> R$ ${ent.valor.toFixed(2)}</p>
+      `;
+    }
+
+    function imprimirComprovante() {
+      const conteudo = document.getElementById('comprovante').innerHTML;
+      const janela = window.open('', '', 'width=600,height=400');
+      janela.document.write('<html><head><title>Comprovante</title></head><body>');
+      janela.document.write(conteudo);
+      janela.document.write('</body></html>');
+      janela.document.close();
+      janela.print();
+    }
   </script>
-
 </body>
 </html>
